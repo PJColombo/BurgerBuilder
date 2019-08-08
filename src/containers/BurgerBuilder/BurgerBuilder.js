@@ -24,6 +24,10 @@ class BurgerBuilder extends Component {
 
     state = INITIAL_STATE
 
+    updatePurchaseState = () => {
+        
+    }
+
     modifyIngredientHandler = (type, addIngredient) => {
         this.setState((prevState) => {
             let ingredients = {...prevState.ingredients},

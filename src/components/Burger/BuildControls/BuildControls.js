@@ -11,9 +11,11 @@ const controls = [
     { label: "Bacon", type: "bacon" },
 ]
 const buildControls = props => {
+    const { price } = props
     const { onIngredientModified } = props
     return (
         <div className={styles.buildControls}>
+            <p>Current Price: <strong>{price}</strong></p>
             {controls.map(control => (
                 <BuildControl 
                     key={control.label} 
@@ -21,6 +23,7 @@ const buildControls = props => {
                     modified={onIngredientModified.bind(this, control.type)} 
                 />
             ))}
+            <button className={styles.OrderButton}>ORDER NOW</button>
         </div>
     )
 }

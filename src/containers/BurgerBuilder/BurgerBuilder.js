@@ -17,6 +17,7 @@ const INITIAL_STATE = {
         cheese: 1,
     },
     totalPrice: 4,
+    purchaseable: false,
 }
 
 class BurgerBuilder extends Component {
@@ -37,6 +38,8 @@ class BurgerBuilder extends Component {
                     totalPrice -= INGREDIENT_PRICES[type]
                 }
             }
+            //Set two decimals only
+            totalPrice =+ totalPrice.toFixed(2)
             return {
                 ingredients,
                 totalPrice,
@@ -45,7 +48,7 @@ class BurgerBuilder extends Component {
     }
 
     render() {
-        const { ingredients } = this.state
+        const { ingredients, totalPrice } = this.state
         const { modifyIngredientHandler } = this
 
         let disabledInfo =  {
@@ -58,7 +61,8 @@ class BurgerBuilder extends Component {
                 <Burger ingredients={ingredients} />
                 <BuildControls 
                     onIngredientModified={modifyIngredientHandler}
-                     />
+                    price={totalPrice}
+                />
             </Fragment>
         )
     }

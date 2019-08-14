@@ -2,6 +2,9 @@ import React, { Component, Fragment} from 'react'
 
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -11,12 +14,12 @@ const INGREDIENT_PRICES = {
 }
 const INITIAL_STATE = {
     ingredients: {
-        salad: 1,
-        bacon: 2,
-        meat: 2,
-        cheese: 1,
+        salad: 0,
+        bacon: 0,
+        meat: 0,
+        cheese: 0,
     },
-    totalPrice: 4,
+    totalPrice: 0,
     purchaseable: false,
 }
 
@@ -24,14 +27,23 @@ class BurgerBuilder extends Component {
 
     state = INITIAL_STATE
 
-    updatePurchaseState = () => {
-        
+    updatePurchaseState = (updateIngredients) => {
+        const ingredients = {
+            ...updateIngredients,
+        }
+        const sum = Object.keys(ingredients)
+            .map(key => {
+                return ingredients[key]
+            })
+            .reduce((sum, el) => {
+                return sum + el
+            }, 0)
+        this.setState({purchaseable: sum > 0})
     }
 
     modifyIngredientHandler = (type, addIngredient) => {
-        this.setState((prevState) => {
-            let ingredients = {...prevState.ingredients},
-                totalPrice = prevState.totalPrice
+        let ingredients = {...this.state.ingredients},
+                totalPrice = this.state.totalPrice
             if (addIngredient) {
                 ingredients[type]++;
                 totalPrice += INGREDIENT_PRICES[type]
@@ -42,17 +54,15 @@ class BurgerBuilder extends Component {
                     totalPrice -= INGREDIENT_PRICES[type]
                 }
             }
+
             //Set two decimals only
             totalPrice =+ totalPrice.toFixed(2)
-            return {
-                ingredients,
-                totalPrice,
-            }
-        })
+        this.setState({ingredients, totalPrice})
+        this.updatePurchaseState(ingredients)
     }
 
     render() {
-        const { ingredients, totalPrice } = this.state
+        const { ingredients, totalPrice, purchaseable } = this.state
         const { modifyIngredientHandler } = this
 
         let disabledInfo =  {
@@ -62,10 +72,15 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         return (
             <Fragment>
+                <Modal>
+                    <OrderSummary ingredients={ingredients}></OrderSummary>
+                </Modal>
                 <Burger ingredients={ingredients} />
                 <BuildControls 
                     onIngredientModified={modifyIngredientHandler}
                     price={totalPrice}
+                    disabled={disabledInfo}
+                    purchaseable={purchaseable}
                 />
             </Fragment>
         )

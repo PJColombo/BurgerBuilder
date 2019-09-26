@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import Button from '../../UI/Button/Button'
 
 const OrderSummary = props => {
-    const { ingredients } = props
+    const { ingredients, price } = props
     const { purchaseCancelled, purchaseContinue } = props
 
     const ingredientSummary = Object.keys(ingredients)
@@ -22,6 +22,7 @@ const OrderSummary = props => {
             <ul>
                 {ingredientSummary}
             </ul>
+            <p><strong>Total Price: {price.toFixed(2)}</strong></p>
             <p>Continue to checkout?</p>
             <Button btnType="Danger" clicked={purchaseCancelled}>CANCEL</Button>
             <Button btnType="Success" clicked={purchaseContinue}>CONTINUE</Button>

@@ -12,7 +12,7 @@ const controls = [
 ]
 const buildControls = props => {
     const { price, purchaseable,  disabled} = props
-    const { onIngredientModified } = props
+    const { onIngredientModified, ordered } = props
     return (
         <div className={styles.buildControls}>
             <p>Current Price: <strong>{price}</strong></p>
@@ -27,6 +27,7 @@ const buildControls = props => {
             <button 
                 className={styles.OrderButton}
                 disabled={!purchaseable}
+                onClick={ordered}
             >
                 ORDER NOW
             </button>

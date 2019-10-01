@@ -2,7 +2,8 @@ import React, { Fragment } from 'react'
 
 import Button from '../../UI/Button/Button'
 
-const OrderSummary = props => {
+const orderSummary = (props) => {
+
     const { ingredients, price } = props
     const { purchaseCancelled, purchaseContinue } = props
 
@@ -26,9 +27,9 @@ const OrderSummary = props => {
             <p>Continue to checkout?</p>
             <Button btnType="Danger" clicked={purchaseCancelled}>CANCEL</Button>
             <Button btnType="Success" clicked={purchaseContinue}>CONTINUE</Button>
-            
+
         </Fragment>
     )
 }
 
-export default OrderSummary
+export default orderSummary

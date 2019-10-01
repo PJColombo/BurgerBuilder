@@ -4,18 +4,21 @@ import Backdrop from '../Backdrop/Backdrop'
 
 import styles from './Modal.module.css'
 
-const Modal = props => (
+const Modal = React.memo((props) => (
     <Fragment>
         <Backdrop show={props.show} clicked={props.modalClosed}/>
-        <div 
+        <div
             className={styles.Modal}
             style={{
                 transform: props.show ? "translateY(0)" : "translateY(-100vh)",
                 opacity: props.show ? "1" : "0"
             }}>
-            { props.children }
+            {props.children}
         </div>
-    </Fragment> 
-)
+    </Fragment>
+
+), (prevProps, nextProps) => {
+    return prevProps.show === nextProps.show
+})
 
 export default Modal

@@ -16,5 +16,14 @@
 /*This is called a rule*/
 .Toolbar nav {
     height: 100%;
+}
+/*This rule will not interfere with Logo class write in the Logo module css file*/
+.Logo {
+    height: 80%;
+}
 
+@media (max-width: 499px) {
+    .DesktopOnly {
+        display: none;
+    }
 }
